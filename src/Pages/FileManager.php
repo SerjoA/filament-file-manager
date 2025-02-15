@@ -56,7 +56,6 @@ class FileManager extends Page implements HasTable
                     ->action(function (FileItem $record) {
                         if ($record->isFolder()) {
                             $this->path = $record->path;
-
                             $this->dispatch('updatePath');
                         }
                     }),
