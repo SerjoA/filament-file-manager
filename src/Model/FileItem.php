@@ -34,8 +34,9 @@ class FileItem extends Model
 
     public function isFolder(): bool
     {
-        return $this->type === 'Folder'
-            && is_dir(Storage::disk(static::$disk)->path($this->path));
+//       dump(static::$disk, $this->path);
+//       dump($this->type, is_dir(Storage::disk(static::$disk)->path($this->path)));
+        return $this->type === 'Folder';
     }
 
     public function isPreviousPath(): bool
@@ -68,7 +69,7 @@ class FileItem extends Model
             $backPath = [
                 [
                     'name' => '..',
-                    'dateModified' => null,
+//                    'dateModified' => null,
                     'size' => null,
                     'type' => 'Folder',
                     'path' => $path->count() > 1 ? $path->take($path->count() - 1)->join('/') : '',
@@ -83,7 +84,7 @@ class FileItem extends Model
                 ->sort()
                 ->map(fn (string $directory): array => [
                     'name' => Str::remove(self::$path.'/', $directory),
-                    'dateModified' => $storage->lastModified($directory),
+//                    'dateModified' => $storage->lastModified($directory),
                     'size' => null,
                     'type' => 'Folder',
                     'path' => $directory,
@@ -93,7 +94,7 @@ class FileItem extends Model
                 ->sort()
                 ->map(fn (string $file): array => [
                     'name' => Str::remove(self::$path.'/', $file),
-                    'dateModified' => $storage->lastModified($file),
+//                    'dateModified' => $storage->lastModified($file),
                     'size' => $storage->size($file),
                     'type' => $storage->mimeType($file) ?: null,
                     'path' => $file,
